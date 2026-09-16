@@ -1,0 +1,36 @@
+@TaskManagerApi_HostAddress = http://localhost:5156
+
+GET {{TaskManagerApi_HostAddress}}/api/tasks
+Accept: application/json
+
+###
+
+GET {{TaskManagerApi_HostAddress}}/api/tasks/1
+Accept: application/json
+
+###
+
+POST {{TaskManagerApi_HostAddress}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Resolve a merge conflict",
+  "description": "Edit the same line on two branches"
+}
+
+###
+
+PUT {{TaskManagerApi_HostAddress}}/api/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Learn git basics",
+  "description": "init, add, commit, log",
+  "isCompleted": true
+}
+
+###
+
+DELETE {{TaskManagerApi_HostAddress}}/api/tasks/2
+
+###
