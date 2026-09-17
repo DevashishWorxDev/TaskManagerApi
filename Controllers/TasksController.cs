@@ -15,8 +15,14 @@ public class TasksController : ControllerBase
         _repository = repository;
     }
 
+    // GET /api/tasks?isCompleted=false&priority=High
     [HttpGet]
-    public ActionResult<IEnumerable<TaskItem>> GetAll() => Ok(_repository.GetAll());
+    public ActionResult<IEnumerable<TaskItem>> GetAll(
+        [FromQuery] bool? isCompleted,
+        [FromQuery] TaskPriority? priority)
+    {
+        return Ok(_repository.GetAll(isCompleted, priority));
+    }
 
     [HttpGet("{id:int}")]
     public ActionResult<TaskItem> GetById(int id)
@@ -36,6 +42,12 @@ public class TasksController : ControllerBase
     public IActionResult Update(int id, TaskItem task)
     {
         return _repository.Update(id, task) ? NoContent() : NotFound();
+    }
+
+    [HttpPatch("{id:int}/complete")]
+    public IActionResult MarkCompleted(int id)
+    {
+        return _repository.MarkCompleted(id) ? NoContent() : NotFound();
     }
 
     [HttpDelete("{id:int}")]

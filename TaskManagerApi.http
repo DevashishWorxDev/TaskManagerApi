@@ -5,6 +5,12 @@ Accept: application/json
 
 ###
 
+# Filter by completion status and/or priority (Low, Medium, High)
+GET {{TaskManagerApi_HostAddress}}/api/tasks?isCompleted=false&priority=High
+Accept: application/json
+
+###
+
 GET {{TaskManagerApi_HostAddress}}/api/tasks/1
 Accept: application/json
 
@@ -15,7 +21,18 @@ Content-Type: application/json
 
 {
   "title": "Resolve a merge conflict",
-  "description": "Edit the same line on two branches"
+  "description": "Edit the same line on two branches",
+  "priority": "High"
+}
+
+###
+
+# Fails validation: title is required
+POST {{TaskManagerApi_HostAddress}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": ""
 }
 
 ###
@@ -26,8 +43,13 @@ Content-Type: application/json
 {
   "title": "Learn git basics",
   "description": "init, add, commit, log",
-  "isCompleted": true
+  "isCompleted": true,
+  "priority": "Low"
 }
+
+###
+
+PATCH {{TaskManagerApi_HostAddress}}/api/tasks/2/complete
 
 ###
 
